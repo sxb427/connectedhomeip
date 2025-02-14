@@ -1884,10 +1884,11 @@ endpoint 1 {
     ram      attribute minTemperature default = 0;
     ram      attribute maxTemperature default = 0;
     ram      attribute step default = 0;
+    ram      attribute selectedTemperatureLevel;
     callback attribute generatedCommandList;
     callback attribute acceptedCommandList;
     callback attribute attributeList;
-    ram      attribute featureMap default = 5;
+    ram      attribute featureMap default = 7;
     ram      attribute clusterRevision default = 1;
 
     handle command SetTemperature;
