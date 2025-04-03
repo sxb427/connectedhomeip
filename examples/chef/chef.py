@@ -839,7 +839,7 @@ def main() -> int:
             shell.run_cmd(" ".join(telink_build_cmds))
 
         elif options.build_target == "linux":
-            shell.run_cmd(f"cd {_CHEF_SCRIPT_PATH}/linux")
+            shell.run_cmd(f"cd {_CHEF_SCRIPT_PATH}/linux/{options.sample_device_type_name}")
 
             linux_args = []
             if options.do_rpc:
