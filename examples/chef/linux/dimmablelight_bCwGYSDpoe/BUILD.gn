@@ -110,7 +110,7 @@ executable("rootnode_dimmablelight_bCwGYSDpoe") {
     cflags = [ "-Wconversion" ]
   }
 
-  output_dir = "./"
+  output_dir = root_out_dir
 }
 
 group("chef") {
