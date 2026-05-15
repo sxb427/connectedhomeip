@@ -1713,6 +1713,10 @@ CHIP_ERROR FabricTable::AddNewPendingFabricCommon(const ByteSpan & noc, const By
 
     EnsureNextAvailableFabricIndexUpdated();
     FabricIndex fabricIndexToUse = kUndefinedFabricIndex;
+
+    ChipLogProgress(FabricProvisioning, "[FABRIC_DEBUG] OpCreds: AddNewPendingFabricCommon: vendorId=0x%04x, fabricIndexToUse=%u, ",
+                    vendorId, fabricIndexToUse);
+
     if (mNextAvailableFabricIndex.HasValue())
     {
         fabricIndexToUse = mNextAvailableFabricIndex.Value();
@@ -1743,6 +1747,7 @@ CHIP_ERROR FabricTable::AddNewPendingFabricCommon(const ByteSpan & noc, const By
     {
         FabricIndex collidingFabricIndex = kUndefinedFabricIndex;
         ReturnErrorOnFailure(FindExistingFabricByNocChaining(fabricIndexToUse, noc, collidingFabricIndex));
+        ChipLogProgress(FabricProvisioning, "[FABRIC_DEBUG] OpCreds: collidingFabricIndex=%u", fabricIndexToUse);
         VerifyOrReturnError(collidingFabricIndex == kUndefinedFabricIndex, CHIP_ERROR_FABRIC_EXISTS);
     }
 

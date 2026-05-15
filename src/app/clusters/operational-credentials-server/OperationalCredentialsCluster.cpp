@@ -422,6 +422,16 @@ std::optional<DataModel::ActionReturnStatus> HandleAddNOC(CommandHandler * comma
 
     auto * secureSession = commandObj->GetExchangeContext()->GetSessionHandle()->AsSecureSession();
 
+    if (secureSession != nullptr)
+    {
+        auto sd = secureSession->GetSubjectDescriptor();
+        ChipLogProgress(Zcl, "[FABRIC_DEBUG] OpCreds: AddNOC initiator: fabricIndex=%u, subject=0x" ChipLogFormatX64 ", type=%s",
+                        sd.fabricIndex, ChipLogValueX64(sd.subject), secureSession->IsPASESession() ? "PASE" : "CASE");
+    }
+
+    ChipLogProgress(Zcl, "[FABRIC_DEBUG] OpCreds: AddNOC NOC below:");
+    ChipLogByteSpan(Zcl, NOCValue);
+
     uint8_t compressed_fabric_id_buffer[sizeof(uint64_t)];
     MutableByteSpan compressed_fabric_id(compressed_fabric_id_buffer);
 
@@ -719,6 +729,19 @@ HandleAddTrustedRootCertificate(CommandHandler * commandObj, const ConcreteComma
     CHIP_ERROR err = CHIP_ERROR_INVALID_ARGUMENT;
 
     auto & rootCertificate = commandData.rootCACertificate;
+
+    auto * secureSession = commandObj->GetExchangeContext()->GetSessionHandle()->AsSecureSession();
+    if (secureSession != nullptr)
+    {
+        auto sd = secureSession->GetSubjectDescriptor();
+        ChipLogProgress(Zcl,
+                        "[FABRIC_DEBUG] OpCreds: AddTrustedRootCertificate initiator: fabricIndex=%u, subject=0x" ChipLogFormatX64
+                        ", type=%s",
+                        sd.fabricIndex, ChipLogValueX64(sd.subject), secureSession->IsPASESession() ? "PASE" : "CASE");
+    }
+
+    ChipLogProgress(Zcl, "[FABRIC_DEBUG] OpCreds: AddTrustedRootCertificate RCAC below:");
+    ChipLogByteSpan(Zcl, rootCertificate);
 
     ChipLogProgress(Zcl, "OpCreds: Received an AddTrustedRootCertificate command");
 
